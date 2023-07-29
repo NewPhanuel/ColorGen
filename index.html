@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="./styles/style.css" />
     </head>
     <body>
+        <div class="nav">
+            <h1>Color Gen</h1>
+        </div>
         <div class="colors">
             <div class="color">
                 <h2>Hex</h2>
@@ -36,7 +39,7 @@
                         min="0"
                         max="360"
                         step="1"
-                        class="hue-input"
+                        class="hue-input slide"
                         data-hue="0"
                     />
                     <span>Brightness</span>
@@ -46,7 +49,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="bright-input"
+                        class="bright-input slide"
                         data-bright="0"
                     />
                     <span>Saturation</span>
@@ -56,7 +59,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="saturation-input"
+                        class="saturation-input slide"
                         data-saturation="0"
                     />
                 </div>
@@ -82,7 +85,7 @@
                         min="0"
                         max="360"
                         step="1"
-                        class="hue-input"
+                        class="hue-input slide"
                         data-hue="1"
                     />
                     <span>Brightness</span>
@@ -92,7 +95,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="bright-input"
+                        class="bright-input slide"
                         data-bright="1"
                     />
                     <span>Saturation</span>
@@ -102,7 +105,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="saturation-input"
+                        class="saturation-input slide"
                         data-saturation="1"
                     />
                 </div>
@@ -128,7 +131,7 @@
                         min="0"
                         max="360"
                         step="1"
-                        class="hue-input"
+                        class="hue-input slide"
                         data-hue="2"
                     />
                     <span>Brightness</span>
@@ -138,7 +141,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="bright-input"
+                        class="bright-input slide"
                         data-bright="2"
                     />
                     <span>Saturation</span>
@@ -148,7 +151,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="saturation-input"
+                        class="saturation-input slide"
                         data-saturation="2"
                     />
                 </div>
@@ -174,7 +177,7 @@
                         min="0"
                         max="360"
                         step="1"
-                        class="hue-input"
+                        class="hue-input slide"
                         data-hue="3"
                     />
                     <span>Brightness</span>
@@ -184,7 +187,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="bright-input"
+                        class="bright-input slide"
                         data-bright="3"
                     />
                     <span>Saturation</span>
@@ -194,7 +197,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="saturation-input"
+                        class="saturation-input slide"
                         data-saturation="3"
                     />
                 </div>
@@ -220,7 +223,7 @@
                         min="0"
                         max="360"
                         step="1"
-                        class="hue-input"
+                        class="hue-input slide"
                         data-hue="4"
                     />
                     <span>Brightness</span>
@@ -230,7 +233,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="bright-input"
+                        class="bright-input slide"
                         data-bright="4"
                     />
                     <span>Saturation</span>
@@ -240,7 +243,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="saturation-input"
+                        class="saturation-input slide"
                         data-saturation="4"
                     />
                 </div>
@@ -266,7 +269,7 @@
                         min="0"
                         max="360"
                         step="1"
-                        class="hue-input"
+                        class="hue-input slide"
                         data-hue="5"
                     />
                     <span>Brightness</span>
@@ -276,7 +279,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="bright-input"
+                        class="bright-input slide"
                         data-bright="5"
                     />
                     <span>Saturation</span>
@@ -286,7 +289,7 @@
                         min="0"
                         max="1"
                         step="0.01"
-                        class="saturation-input"
+                        class="saturation-input slide"
                         data-saturation="5"
                     />
                 </div>
@@ -335,6 +338,12 @@
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
             integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"
+            integrity="sha512-zInFF17qBFVvvvFpIfeBzo7Tj7+rQxLeTJDmbxjBz5/zIr89YVbTNelNhdTT+/DCrxoVzBeUPVFJsczKbB7sew=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>

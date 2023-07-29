@@ -1,0 +1,16 @@
+.controls {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -4rem;
+}
+
+.lock,
+.adjust {
+    font-size: 1.2rem;
+    border: none;
+    background: none;
+    margin-top: 1rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
