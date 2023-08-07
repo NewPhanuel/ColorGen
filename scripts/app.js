@@ -2,13 +2,14 @@
 const colors = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type="range"]');
-const currentHexes = document.querySelectorAll('color h2');
+const currentHexes = document.querySelectorAll('.color h2');
 const controlButtons = document.querySelectorAll('div.controls');
 const generateBtnIcon = document.querySelector('button.generate span');
 const sliderPanels = document.querySelectorAll('div.sliders');
+const copyContainer = document.querySelector('.copy-container');
+const copyPopup = document.querySelector('.copy-popup');
 
 // Global Variables
-let initialColors = [];
 
 // Functions
 const generateHex = () => {
@@ -17,25 +18,38 @@ const generateHex = () => {
 };
 
 const generateColor = () => {
+    let initialColors = [];
     colors.forEach((color) => {
         buttonDiv = color.childNodes[3].childNodes;
 
         const hex = generateHex();
-        color.style.background = hex;
-        color.childNodes[1].innerText = hex;
+
+        if (color.classList.contains('locked')) {
+            initialColors.push(color.childNodes[1].innerText);
+            return;
+        } else {
+            initialColors.push(chroma(hex).hex());
+        }
+
+        hexcode =
+            initialColors[
+                color.querySelectorAll('input')[0].getAttribute('data-hue')
+            ];
+
+        color.style.background = hexcode;
+        color.childNodes[1].innerText = hexcode;
         color.style.transition = '0.5s';
-        checkTextContrast(hex, color.childNodes[1], buttonDiv);
+        checkTextContrast(hexcode, color.childNodes[1], buttonDiv);
 
-        color.setAttribute('hex', `${hex}`);
-        initialColors.push(chroma(hex).hex());
+        color.setAttribute('hex', `${hexcode}`);
 
-        const hexColor = chroma(hex);
+        const hexColor = chroma(hexcode);
         const inputSliders = color.querySelectorAll('.sliders input');
         const hue = inputSliders[0];
         const brightness = inputSliders[1];
         const saturation = inputSliders[2];
 
-        const colorPositions = chroma(hex.hex()).hsl();
+        const colorPositions = chroma(hexcode).hsl();
 
         brightness.value = colorPositions[2];
         hue.value = colorPositions[0];
@@ -170,6 +184,33 @@ const closeSliders = (e) => {
     e.target.parentElement.classList.remove('active');
 };
 
+const copyToClipboard = (hex) => {
+    const el = document.createElement('textarea');
+    el.value = hex.innerText;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
+    // pop-up animation
+    copyContainer.classList.add('active');
+    copyPopup.classList.add('active');
+};
+
+const closeCopy = () => {
+    copyPopup.classList.remove('active');
+    copyContainer.classList.remove('active');
+};
+
+const lockColor = (e) => {
+    const div = e.target.parentElement.parentElement;
+    div.classList.toggle('locked');
+
+    const icon = e.target.children[0];
+    icon.classList.toggle('fa-lock-open');
+    icon.classList.toggle('fa-lock');
+};
+
 // Statements
 document.addEventListener('DOMContentLoaded', generateColor);
 generateBtn.addEventListener('click', generateColor);
@@ -189,10 +230,17 @@ sliders.forEach((slider) => {
 
 controlButtons.forEach((buttonDiv) => {
     buttonDiv.children[0].addEventListener('click', openSliders);
+    buttonDiv.children[1].addEventListener('click', lockColor);
 });
 
 sliderPanels.forEach((sliderPanel) => {
     sliderPanel.children[0].addEventListener('click', closeSliders);
 });
 
-console.log(initialColors);
+currentHexes.forEach((hex) => {
+    hex.addEventListener('dblclick', () => {
+        copyToClipboard(hex);
+    });
+});
+
+copyContainer.addEventListener('click', closeCopy);
