@@ -1,0 +1,79 @@
+div.save-container {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+div.save-popup {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 1.5rem;
+    transition: transform 0.5s ease;
+    transform: translateY(-2rem);
+    min-width: 30%;
+    min-height: 30vh;
+    padding-top: 1rem;
+}
+
+div.save-popup h4 {
+    font-size: 2rem;
+    padding: 2rem;
+}
+
+div.save-container.active {
+    opacity: 1;
+    pointer-events: all;
+    transition: 0.2s ease;
+}
+
+div.save-popup.active {
+    transform: translateY(0);
+    transition: transform 0.2s ease;
+    pointer-events: all;
+}
+
+div.save-popup input {
+    width: 80%;
+    padding: 0.5rem 1rem;
+    background-color: var(--light-shade);
+    border: none;
+    border-radius: 1rem;
+    height: 2.5rem;
+    margin: 1rem auto;
+}
+
+div.save-popup button.submit-save {
+    width: 30%;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 1rem;
+    height: 2.5rem;
+    margin: 1.5rem auto;
+    color: #fff;
+    cursor: pointer;
+}
+
+div.save-popup button.close-save {
+    border: none;
+    background: transparent;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    position: absolute;
+    top: 0.9rem;
+    right: 1rem;
+    cursor: pointer;
+}

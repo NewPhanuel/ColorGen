@@ -4,9 +4,12 @@
 @import url(./controls.css);
 @import url(./copy.css);
 @import url(./animations.css);
+@import url(./save.css);
+@import url(./library.css);
 
 :root {
     --primary-color: rgb(1, 3, 21);
+    --light-shade: #f3f3f3;
 }
 
 * {
