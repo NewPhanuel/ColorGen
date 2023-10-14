@@ -5,6 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ColorGen</title>
+        <link
+            rel="shortcut icon"
+            href="./img/favicon.png"
+            type="image/x-icon"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -15,7 +20,26 @@
     </head>
     <body>
         <div class="nav">
-            <h1>Color Gen</h1>
+            <div class="nav-wrapper">
+                <div class="select-wrapper">
+                    <select class="basic colortype">
+                        <option value="0">Random</option>
+                        <option value="1">Analogous</option>
+                        <option value="2">Monochromatic</option>
+                        <option value="3">Split-Complementary</option>
+                        <option value="4">Triad</option>
+                        <option value="5">Tetrad</option>
+                        <option value="6">Compound</option>
+                        <option value="7">Shades</option>
+                    </select>
+                </div>
+                <h1 id="heading">
+                    <i class="fa-solid fa-swatchbook"></i>ColorGen
+                </h1>
+                <button class="basic download">
+                    Download<i class="fa-solid fa-download"></i>
+                </button>
+            </div>
         </div>
         <div class="colors">
             <div class="color">
@@ -332,6 +356,23 @@
                 <button type="submit" class="submit-save">Save</button>
             </div>
         </div>
+        <div class="download-container">
+            <div class="download-popup">
+                <button class="close-download">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h4>Give your palette a name</h4>
+                <input
+                    type="text"
+                    max-length="25"
+                    class="download-name"
+                    placeholder="Name of palette..."
+                />
+                <button type="submit" class="submit-download">
+                    Download<i class="fa-solid fa-download"></i>
+                </button>
+            </div>
+        </div>
         <div class="library-container">
             <div class="library-popup">
                 <button class="close-library">
@@ -355,6 +396,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
-        <script src="scripts/app.js"></script>
+        <script src="scripts/app.js" type="module"></script>
+        <script src="scripts/myColorLib.js" type="module"></script>
     </body>
 </html>

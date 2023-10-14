@@ -111,6 +111,7 @@ div.palettes ul.palette-list li {
     font-size: 1.1rem;
     font-weight: 600;
     flex: 1;
+    cursor: pointer;
 }
 
 div.palette-col {
@@ -126,6 +127,7 @@ button.delete-palette {
     background: transparent;
     font-size: 1.2rem;
     color: var(--primary-color);
+    pointer-events: all;
 }
 
 .palette-color1 {

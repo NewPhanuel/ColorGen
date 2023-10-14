@@ -1,3 +1,15 @@
+import { deletePalette } from './deletePalette.js';
+import { selectPalette } from './selectPalette.js';
+import { tinycolor } from './tinycolor.js';
+import {
+    getAnalogousPalette,
+    getTriadicPalette,
+    getSplitComplementPalette,
+    getTetradicPalette,
+    getCompoundPalette,
+    getShadesPalette,
+} from './myColorLib.js';
+
 // Global selections
 const colors = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
@@ -15,34 +27,78 @@ const saveInput = document.querySelector('.save-container input');
 const libraryBtn = document.querySelector('button.library');
 const closeLibrary = document.querySelector('button.close-library');
 const libraryContainer = document.querySelector('.library-container');
-const libraryTitle = document.querySelector('.save-popup h4');
 const palettesDiv = document.querySelector('.palettes');
 const list = document.querySelector('.palette-list');
-const delPaletteBtn = document.querySelector('.delete-palette');
+const colorType = document.querySelector('.colortype');
+const downloadBtn = document.querySelector('.download');
+const submitDownload = document.querySelector('.submit-download');
+const closeDownload = document.querySelector('.close-download');
+const downloadContainer = document.querySelector('.download-container');
+const downloadInput = document.querySelector('.download-container input');
 
 // Global Variables
 let savedPalettes = [];
 
 // Functions
 const generateHex = () => {
-    return chroma.random();
+    let typeNum;
+    if (colorType.value !== '0') {
+        typeNum = parseInt(colorType.value);
+    } else {
+        typeNum = parseInt(Math.ceil(Math.random() * 7));
+    }
+
+    let colorList = [];
+    let preColor = [];
+    const randColor = tinycolor.random().toHex();
+
+    switch (typeNum) {
+        case 1:
+            colorList = getAnalogousPalette(chroma(randColor).hsl());
+            break;
+        case 2:
+            preColor = tinycolor(randColor).monochromatic();
+            preColor.map((color) => {
+                colorList.push(color.toHexString());
+            });
+            break;
+        case 3:
+            colorList = getSplitComplementPalette(chroma(randColor).hsl());
+            break;
+        case 4:
+            colorList = getTriadicPalette(chroma(randColor).hsl());
+            break;
+        case 5:
+            colorList = getTetradicPalette(chroma(randColor).hsl());
+            break;
+        case 6:
+            colorList = getCompoundPalette(chroma(randColor).hsl());
+            break;
+        case 7:
+            colorList = getShadesPalette(chroma(randColor).hsl());
+            break;
+    }
+
+    return colorList;
 };
 
 const generateColor = () => {
     let initialColors = [];
-    colors.forEach((color) => {
-        buttonDiv = color.childNodes[3].childNodes;
+    const hex = generateHex();
 
-        const hex = generateHex();
+    colors.forEach((color) => {
+        const buttonDiv = color.childNodes[3].childNodes;
 
         if (color.classList.contains('locked')) {
             initialColors.push(color.childNodes[1].innerText);
             return;
         } else {
-            initialColors.push(chroma(hex).hex());
+            initialColors.push(
+                hex[color.querySelectorAll('input')[0].getAttribute('data-hue')]
+            );
         }
 
-        hexcode =
+        const hexcode =
             initialColors[
                 color.querySelectorAll('input')[0].getAttribute('data-hue')
             ];
@@ -131,7 +187,7 @@ const hslControls = (e) => {
     const brightness = sliders[1];
     const saturation = sliders[2];
 
-    bgColor = colors[index].attributes.hex.value;
+    const bgColor = colors[index].attributes.hex.value;
     let color = chroma(bgColor)
         .set('hsl.s', saturation.value)
         .set('hsl.l', brightness.value)
@@ -161,7 +217,7 @@ const resetInput = (e) => {
     const brightness = sliders[1];
     const saturation = sliders[2];
 
-    colorValue = chroma(bgColor).hsl();
+    const colorValue = chroma(bgColor).hsl();
 
     if (e.target.name === 'hue') {
         e.target.value = colorValue[0];
@@ -238,6 +294,7 @@ const loadPalettes = () => {
             icon.classList.add('fa-regular', 'fa-trash-can');
             deleteBtn.classList.add('delete-palette');
             deleteBtn.style.cursor = 'pointer';
+            deleteBtn.addEventListener('click', deletePalette);
 
             childList.classList.add('palette-list__child');
             paletteName.innerText = palette.name;
@@ -297,7 +354,6 @@ const addPalette = (name, colors, paletteNumber) => {
     paletteName.innerText = name;
     paletteName.classList.add('palette-list__child-name');
     childList.setAttribute('paletteNumber', `${paletteNumber}`);
-    console.dir(childList);
 
     icon.classList.add('fa-regular', 'fa-trash-can');
     deleteBtn.classList.add('delete-palette');
@@ -311,11 +367,15 @@ const addPalette = (name, colors, paletteNumber) => {
         paletteColors.appendChild(palColor);
     });
 
+    deleteBtn.addEventListener('click', deletePalette);
+    paletteName.addEventListener('click', selectPalette);
+
     deleteBtn.appendChild(icon);
     childList.appendChild(paletteName);
     childList.appendChild(paletteColors);
     childList.appendChild(deleteBtn);
     list.appendChild(childList);
+    palettesDiv.appendChild(list);
 };
 
 const savePalette = () => {
@@ -348,26 +408,12 @@ const saveToLocal = (paletteObject) => {
     localStorage.setItem('palettes', JSON.stringify(palettes));
 };
 
-const deletePalette = (e) => {
-    const palette = e.target.parentElement;
-    const paletteNumber = palette.getAttribute('paletteNumber');
-    let localPalettes;
+const isTextField = (el) => {
+    return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA';
+};
 
-    localStorage.getItem('palettes') === null
-        ? (localPalettes = [])
-        : (localPalettes = JSON.parse(localStorage.getItem('palettes')));
-
-    localPalettes.forEach((localPalette) => {
-        if (localPalette.paletteNumber === paletteNumber) {
-            localPalettes.splice(indexOf(localPalette), 1);
-        }
-    });
-
-    palette.style.opacity = '0';
-    palette.style.display = 'none';
-    palette.remove();
-
-    localStorage.setItem('palettes', JSON.stringify(localPalettes));
+const downloadPalette = () => {
+    console.log('Not ready for now!');
 };
 
 // Statements
@@ -410,8 +456,64 @@ closeSave.addEventListener('click', () => {
     modal(saveContainer);
 });
 submitSave.addEventListener('click', () => {
-    savePalette();
-    modal(saveContainer);
+    if (
+        saveInput.value.match(/[a-z]/g) ||
+        saveInput.value.match(/[A-Z]/g) ||
+        saveInput.value.match(/[0-9]/g)
+    ) {
+        if (saveInput.value.length >= 3) {
+            savePalette();
+            modal(saveContainer);
+        } else {
+            alert('Name must be up to 3 letters.');
+        }
+    } else {
+        alert('Name must contain one letter or number.');
+    }
+});
+
+downloadBtn.addEventListener('click', () => {
+    modal(downloadContainer);
+});
+closeDownload.addEventListener('click', () => {
+    modal(downloadContainer);
+});
+submitSave.addEventListener('click', () => {
+    if (
+        downloadInput.value.match(/[a-z]/g) ||
+        downloadInput.value.match(/[A-Z]/g) ||
+        downloadInput.value.match(/[0-9]/g)
+    ) {
+        if (downloadInput.value.length >= 3) {
+            downloadPalette();
+            modal(downloadContainer);
+        } else {
+            alert('Name must be up to 3 letters.');
+        }
+    } else {
+        alert('Name must contain one letter or number.');
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+    }
+});
+
+saveInput.addEventListener('keydown', (e) => {
+    if (saveContainer.classList.contains('active')) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            savePalette();
+            modal(saveContainer);
+        }
+    }
 });
 
 // Implementing library
@@ -421,5 +523,50 @@ libraryBtn.addEventListener('click', () => {
 closeLibrary.addEventListener('click', () => {
     modal(libraryContainer);
 });
+
 document.addEventListener('DOMContentLoaded', loadPalettes);
-delPaletteBtn.addEventListener('click', deletePalette);
+
+document.addEventListener('DOMContentLoaded', () => {
+    let listChild = list.querySelectorAll('.palette-list__child');
+
+    listChild.forEach((child) => {
+        const deleteButton = child.lastChild;
+        deleteButton.addEventListener('click', deletePalette);
+    });
+});
+
+// Space key
+document.addEventListener('keydown', (e) => {
+    if (e.keyCode === 32 && !isTextField(e.target)) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    if (e.keyCode === 32 && !isTextField(e.target)) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.keyCode === 32) {
+        if (
+            !saveContainer.classList.contains('active') &&
+            !libraryContainer.classList.contains('active')
+        ) {
+            generateColor();
+            generateBtn.childNodes[0].style.animation =
+                'rotate 0.5s alternate ease-in-out';
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const paletteNames = document.querySelectorAll('.palette-list__child-name');
+
+    paletteNames.forEach((paletteName) => {
+        paletteName.addEventListener('click', selectPalette);
+    });
+});
+
+export { modal, libraryContainer, colors, colorizeInput, checkTextContrast };

@@ -1,4 +1,4 @@
-div.save-container {
+div.download-container {
     position: fixed;
     top: 0%;
     left: 0%;
@@ -14,7 +14,7 @@ div.save-container {
     transition: all 0.5s ease;
 }
 
-div.save-popup {
+div.download-popup {
     background: #fff;
     display: flex;
     flex-direction: column;
@@ -29,24 +29,24 @@ div.save-popup {
     pointer-events: none;
 }
 
-div.save-popup h4 {
+div.download-popup h4 {
     font-size: 2rem;
     padding: 2rem;
 }
 
-div.save-container.active {
+div.download-container.active {
     opacity: 1;
     pointer-events: all;
     transition: 0.2s ease;
 }
 
-div.save-popup.active {
+div.download-popup.active {
     transform: translateY(0);
     transition: transform 0.2s ease;
     pointer-events: all;
 }
 
-div.save-popup input {
+div.download-popup input {
     width: 80%;
     padding: 0.5rem 1rem;
     background-color: var(--light-shade);
@@ -56,7 +56,7 @@ div.save-popup input {
     margin: 1rem auto;
 }
 
-div.save-popup button.submit-save {
+div.download-popup button.submit-download {
     width: 30%;
     padding: 0.5rem 1rem;
     background-color: var(--primary-color);
@@ -68,7 +68,7 @@ div.save-popup button.submit-save {
     cursor: pointer;
 }
 
-div.save-popup button.close-save {
+div.download-popup button.close-download {
     border: none;
     background: transparent;
     font-size: 1.3rem;
@@ -77,4 +77,8 @@ div.save-popup button.close-save {
     top: 0.9rem;
     right: 1rem;
     cursor: pointer;
+}
+
+button.submit-download > .fa-download {
+    margin-left: 0.5rem;
 }
