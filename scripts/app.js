@@ -9,8 +9,10 @@ import {
     getCompoundPalette,
     getShadesPalette,
 } from './myColorLib.js';
+import { downloadPalette } from './downloadPalette.js';
 
 // Global selections
+const colorParent = document.querySelector('.colors');
 const colors = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type="range"]');
@@ -412,10 +414,6 @@ const isTextField = (el) => {
     return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA';
 };
 
-const downloadPalette = () => {
-    console.log('Not ready for now!');
-};
-
 // Statements
 document.addEventListener('DOMContentLoaded', generateColor);
 generateBtn.addEventListener('click', generateColor);
@@ -478,7 +476,7 @@ downloadBtn.addEventListener('click', () => {
 closeDownload.addEventListener('click', () => {
     modal(downloadContainer);
 });
-submitSave.addEventListener('click', () => {
+submitDownload.addEventListener('click', () => {
     if (
         downloadInput.value.match(/[a-z]/g) ||
         downloadInput.value.match(/[A-Z]/g) ||
@@ -552,7 +550,8 @@ document.addEventListener('keydown', (e) => {
     if (e.keyCode === 32) {
         if (
             !saveContainer.classList.contains('active') &&
-            !libraryContainer.classList.contains('active')
+            !libraryContainer.classList.contains('active') &&
+            !downloadContainer.classList.contains('active')
         ) {
             generateColor();
             generateBtn.childNodes[0].style.animation =
@@ -569,4 +568,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-export { modal, libraryContainer, colors, colorizeInput, checkTextContrast };
+export {
+    modal,
+    libraryContainer,
+    colors,
+    colorizeInput,
+    checkTextContrast,
+    downloadBtn,
+    colorParent,
+    submitDownload,
+    downloadInput,
+};
