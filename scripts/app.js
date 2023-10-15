@@ -514,6 +514,15 @@ saveInput.addEventListener('keydown', (e) => {
     }
 });
 
+downloadInput.addEventListener('keydown', (e) => {
+    if (downloadContainer.classList.contains('active')) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            downloadPalette();
+            modal(downloadContainer);
+        }
+    }
+});
+
 // Implementing library
 libraryBtn.addEventListener('click', () => {
     modal(libraryContainer);
